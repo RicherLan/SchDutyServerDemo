@@ -2,6 +2,8 @@ package netty.server;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.cfg.ConfigFeature;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -17,12 +19,13 @@ import netty.server.handler.IMHandler;
 import netty.server.handler.LoginRequestHandler;
 import netty.server.userPersonalInfoHandler.IsPhRegistedRequestHandler;
 import netty.server.userPersonalInfoHandler.RegisTestRequestHandler;
+import util.Config;
 
 
 public class NettyServer {
 
 	private static NettyServer instance = null;
-    private static final int PORT = 8988;
+
 
     public static NettyServer getInstance() {
         if (instance == null) {
@@ -68,7 +71,7 @@ public class NettyServer {
                  });
 
 
-         bind(serverBootstrap, PORT);
+         bind(serverBootstrap, Config.nettyPort);
     }
 
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {

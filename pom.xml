@@ -1,31 +1,51 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>lwh</groupId>
-  <artifactId>SchDutyServerDemo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>lwh</groupId>
+	<artifactId>SchDutyServerDemo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>SchDutyServerDemo</name>
-  <url>http://maven.apache.org</url>
+	<name>SchDutyServerDemo</name>
+	<url>http://maven.apache.org</url>
 
-  
-  <properties>
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<slf4j-log4j12.version>1.7.18</slf4j-log4j12.version>
 		<log4j.version>1.2.17</log4j.version>
-  </properties>
+	</properties>
 
-  <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 			<version>4.1.29.Final</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.vertx/vertx-rx-java2 -->
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-rx-java2</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>3.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-web</artifactId>
+			<version>3.5.2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -113,10 +133,17 @@
 			<version>1.2.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+
+
 	</dependencies>
-	
+
 	<build>
-	
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -126,16 +153,16 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId> maven-assembly-plugin </artifactId>
 				<configuration>
 					<descriptorRefs>
-					<descriptorRef>jar-with-dependencies</descriptorRef>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<archive>
 						<manifest>
-						<mainClass>netty.server.StartServer</mainClass>
+							<mainClass>netty.server.StartServer</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -149,19 +176,19 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>  
-		        <groupId>org.apache.maven.plugins</groupId>  
-		        <artifactId>maven-surefire-plugin</artifactId>  
-		        <version>2.4.2</version>  
-		        <configuration>  
-		          <skipTests>true</skipTests>  
-		        </configuration>  
-			</plugin> 
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
 
-	
-  
+
+
 </project>

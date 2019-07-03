@@ -9,6 +9,7 @@ import db.CorpDBService;
 import db.UserDBService;
 import test.MoniDBService;
 import threadUtil.FixedThreadPool;
+import verticleServer.httpServerBoot.VertXBootServer;
 
 public class StartServer {
 
@@ -19,6 +20,7 @@ public class StartServer {
         //开启业务线程池
 		FixedThreadPool.startThreadPool();
 		
+		VertXBootServer.verticleServerStart();
 		
 		/*
 		 * 更新数据库   社团部门的当前周  +1
