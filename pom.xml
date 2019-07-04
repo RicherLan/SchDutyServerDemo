@@ -35,16 +35,20 @@
 			<version>3.7.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.vertx/vertx-core -->
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
-			<version>3.5.2</version>
+			<version>3.7.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.vertx/vertx-web -->
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-web</artifactId>
-			<version>3.5.2</version>
+			<version>3.7.0</version>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>

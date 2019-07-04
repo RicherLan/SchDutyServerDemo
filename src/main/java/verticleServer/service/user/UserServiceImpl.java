@@ -46,8 +46,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	// 注册用户
-	public String regisUser(String schoolname, String collegename, String majorname, int ruxueyear,
-			String phonenumber, String password) {
+	public String regisUser(String schoolname, String collegename, String majorname, int ruxueyear, String phonenumber,
+			String password) {
 
 		Connection conn = null;
 		try {
@@ -85,6 +85,64 @@ public class UserServiceImpl implements IUserService {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+
+	}
+
+	// 修改密码
+	public String changePassword(String phonenumber, String password) {
+
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "select password from users where phonenumber='" + phonenumber + "'";
+
+			ResultSet resultSet = conn.createStatement().executeQuery(sql);
+			if (resultSet.next()) {
+
+				sql = "update users set password='" + password + "' where phonenumber='" + phonenumber + "'";
+				int row = conn.createStatement().executeUpdate(sql);
+				if (row > 0) {
+					return "ok";
+				}
+				return "errdb";
+			} else {
+				return "errph";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "errdb";
+		} finally {
+			try {
+				conn.close();
+			} catch (Exception e) {
+			}
+		}
+
+	}
+
+	// 某手机号是否被注册
+	public boolean isPhoneReg(String phonenumber) {
+
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "select password from users where phonenumber='" + phonenumber + "'";
+
+			ResultSet resultSet = conn.createStatement().executeQuery(sql);
+			if (resultSet.next()) {
+				return true;
+			} 
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				conn.close();
+			} catch (Exception e) {
 			}
 		}
 

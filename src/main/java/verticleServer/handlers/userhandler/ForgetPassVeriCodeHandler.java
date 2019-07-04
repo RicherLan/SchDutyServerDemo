@@ -5,21 +5,19 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import threadUtil.FixedThreadPool;
 import util.AliService;
-import util.MyTools;
+import verticleServer.entity.user.ForgetPass;
 import verticleServer.entity.user.RegPhone;
 import verticleServer.httpUtil.CacheService;
 import verticleServer.httpUtil.HttpUtil;
 import verticleServer.service.user.IUserService;
 
-
 /*
- * 	短信验证码处理器
+ * 	忘记密码获得短信验证码
  */
-public class RegVeriCodeHandler implements Handler<RoutingContext>{
-
-	private IUserService service;
+public class ForgetPassVeriCodeHandler  implements Handler<RoutingContext>{
+private IUserService service;
 	
-	public RegVeriCodeHandler(IUserService service) {
+	public ForgetPassVeriCodeHandler(IUserService service) {
 		this.service = service;
 	}
 	
@@ -30,7 +28,7 @@ public class RegVeriCodeHandler implements Handler<RoutingContext>{
 		JsonObject bodyAsJson = ctx.getBodyAsJson();
 		
 		
-		//System.out.println("注册用户   短信验证码请求");
+		//System.out.println("忘记密码   短信验证码请求");
 		FixedThreadPool.threadPool.submit(new Runnable() {
 			
 			@Override
@@ -44,13 +42,13 @@ public class RegVeriCodeHandler implements Handler<RoutingContext>{
 				
 				String noteCode = AliService.getVerificationCode(4);
 				
-				if(!CacheService.phoneRegMap.containsKey(phone)) {
-					RegPhone regPhone = new RegPhone();
-					regPhone.setPhone(phone);
-					CacheService.phoneRegMap.put(phone, regPhone);
+				if(!CacheService.phoneForgetPassMap.containsKey(phone)) {
+					ForgetPass forgetPass = new ForgetPass();
+					forgetPass.setPhone(phone);
+					CacheService.phoneForgetPassMap.put(phone, forgetPass);
 				}
-				CacheService.phoneRegMap.get(phone).setNodeCode(noteCode);
-				CacheService.phoneRegMap.get(phone).setLasttime(System.currentTimeMillis());
+				CacheService.phoneForgetPassMap.get(phone).setNodeCode(noteCode);
+				CacheService.phoneForgetPassMap.get(phone).setLasttime(System.currentTimeMillis());
 				
 				//发送验证码
 				String msgString = AliService.sendRegCode(phone,noteCode);
@@ -63,6 +61,4 @@ public class RegVeriCodeHandler implements Handler<RoutingContext>{
 		
 		
 	}
-
-	
 }

@@ -1,6 +1,6 @@
 package verticleServer.entity.user;
 
-public class RegPhone {
+public class ForgetPass {
 
 	String phone;
 	String imageCode; // 图片验证码
@@ -9,7 +9,7 @@ public class RegPhone {
 	
 	String encrypt;   //传输图片验证码时  同时传播一个密文   防止图片被破解。
 
-	public RegPhone() {
+	public ForgetPass() {
 		this.phone = "";
 		this.imageCode = "";
 		this.nodeCode = "";
@@ -57,6 +57,5 @@ public class RegPhone {
 		this.encrypt = encrypt;
 	}
 
-	
 	
 }

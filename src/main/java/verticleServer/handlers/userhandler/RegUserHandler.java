@@ -29,7 +29,7 @@ public class RegUserHandler implements Handler<RoutingContext>{
 		
 		JsonObject bodyAsJson = ctx.getBodyAsJson();
 		
-		System.out.println("注册用户");
+		//System.out.println("注册用户");
 		FixedThreadPool.threadPool.submit(new Runnable() {
 
 			@Override
@@ -38,16 +38,30 @@ public class RegUserHandler implements Handler<RoutingContext>{
 				String notecode = bodyAsJson.getString("noteCode");
 				String imagecode = bodyAsJson.getString("imagecode");
 				String phonenumber = bodyAsJson.getString("phonenumber"); // 要注册的手机号
+				String encrypt = bodyAsJson.getString("encrypt");
+			
+				//System.out.println(encrypt+"   88888888888");	
+				//System.out.println("短信"+notecode+"   图片:"+imagecode);
+				
+				
 				if(!CacheService.phoneRegMap.containsKey(phonenumber)) {
 					HttpUtil.resp(ctx.request(), new JsonObject().put("message", "error"));
 					return;
 				}else {
 					RegPhone regPhone = CacheService.phoneRegMap.get(phonenumber);
+					
+					if(!encrypt.equals(regPhone.getEncrypt())) {
+						HttpUtil.resp(ctx.request(), new JsonObject().put("message", "error"));
+						return;
+					}
+					
+					//System.out.println("短信"+regPhone.getNodeCode()+"   图片:"+regPhone.getImageCode());
+					
 					if(regPhone.getImageCode().equals("")||regPhone.getNodeCode().equals("")) {
 						HttpUtil.resp(ctx.request(), new JsonObject().put("message", "error"));
 						return;
 					}
-					if(!imagecode.equals(regPhone.getImageCode())) {
+					if(!imagecode.toLowerCase().equals(regPhone.getImageCode().toLowerCase())) {
 						HttpUtil.resp(ctx.request(), new JsonObject().put("message", "图片验证码不正确!"));
 						return;
 					}else if(!notecode.equals(regPhone.getNodeCode())){
@@ -69,8 +83,20 @@ public class RegUserHandler implements Handler<RoutingContext>{
 				
 				if(rString.equals("ok")) {
 					HttpUtil.resp(ctx.request(), new JsonObject().put("message", "ok"));
+					
+					CacheService.phoneRegMap.get(phonenumber).setImageCode("");
+					CacheService.phoneRegMap.get(phonenumber).setNodeCode("");
+					CacheService.phoneRegMap.get(phonenumber).setEncrypt("");
+					
+					
+					
 				}else {
-					HttpUtil.resp(ctx.request(), new JsonObject().put("message", "服务器繁忙,请稍后再试!"));
+					if(rString.equals("hasregisted")) {
+						HttpUtil.resp(ctx.request(), new JsonObject().put("message", "该号码已被注册!"));
+					}else {
+						HttpUtil.resp(ctx.request(), new JsonObject().put("message", "服务器繁忙,请稍后再试!"));
+					}
+					
 				}
 				
 
